@@ -13,7 +13,7 @@ export default defineConfig({
         port: 5173,
         proxy: {
             '/api': {
-                target: 'http://localhost:8000',
+                target: 'https://boulder-back-end-main-44p9sd.laravel.cloud',
                 changeOrigin: true,
                 secure: false
             }
