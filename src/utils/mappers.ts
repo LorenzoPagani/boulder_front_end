@@ -3,6 +3,7 @@ import type {
     BlockDto,
     BlockScoreDetailDto,
     ScoreDetailsResponseDto,
+    LeaderboardEntryDto,
     LeaderboardResponseDto,
     Athlete,
     Block,
