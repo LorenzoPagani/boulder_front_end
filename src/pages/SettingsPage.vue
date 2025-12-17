@@ -67,7 +67,6 @@ import { useAuthStore } from '@/stores/auth'
 import { useBlocksStore } from '@/stores/blocks'
 import { useScoreStore } from '@/stores/score'
 import { useLeaderboardStore } from '@/stores/leaderboard'
-import { devApi } from '@/api/endpoints'
 import AppNav from '@/components/AppNav.vue'
 import ErrorBanner from '@/components/ErrorBanner.vue'
 import LoadingOverlay from '@/components/LoadingOverlay.vue'
@@ -109,33 +108,7 @@ async function handleResetBlocks() {
     }
 }
 
-async function handleResetAll() {
-    if (!confirm('⚠️ ATTENZIONE! Questa operazione eliminerà TUTTI i dati dell\'evento.\n\nSei assolutamente sicuro di voler continuare?')) {
-        return
-    }
 
-    if (!confirm('Conferma ancora una volta: vuoi davvero eliminare TUTTI i dati?')) {
-        return
-    }
-
-    loading.value = true
-    error.value = null
-    successMessage.value = null
-
-    try {
-        await devApi.resetAll()
-        // Clear all stores
-        scoreStore.reset()
-        leaderboardStore.reset()
-        // Logout
-        await authStore.logout()
-        router.push('/login')
-    } catch (err: any) {
-        error.value = err.message || 'Errore durante il reset totale'
-    } finally {
-        loading.value = false
-    }
-}
 
 async function handleLogout() {
     if (!confirm('Sei sicuro di voler uscire?')) {
