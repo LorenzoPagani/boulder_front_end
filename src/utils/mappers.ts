@@ -79,8 +79,7 @@ export function mapScoreDetails(dto: ScoreDetailsResponseDto, scoreSummary?: { s
 // Map LeaderboardEntryDto to LeaderboardEntry
 export function mapLeaderboardEntry(dto: LeaderboardEntryDto): LeaderboardEntry {
     return {
-        bibNumber: dto.bib_number,
-        displayName: dto.display_name,
+        name: dto.name,
         totalScore: dto.score, // backend usa 'score' non 'total_score'
         completedBlocks: dto.completed_blocks
     }

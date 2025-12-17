@@ -37,7 +37,6 @@
                             <tr>
                                 <th class="rank-col">Pos.</th>
                                 <th>Atleta</th>
-                                <th class="number-col">Pettorale</th>
                                 <th class="number-col">Punteggio</th>
                                 <th class="number-col">Completati</th>
                             </tr>
@@ -53,10 +52,9 @@
                                     </span>
                                 </td>
                                 <td class="athlete-name">
-                                    {{ entry.displayName }}
+                                    {{ entry.name }}
                                     <span v-if="isCurrentAthlete(entry)" class="you-badge">Tu</span>
                                 </td>
-                                <td class="number-col">{{ entry.bibNumber || '-' }}</td>
                                 <td class="number-col score">{{ formatScore(entry.totalScore) }}</td>
                                 <td class="number-col">{{ entry.completedBlocks }}</td>
                             </tr>
@@ -91,7 +89,7 @@ async function refreshLeaderboard() {
 }
 
 function isCurrentAthlete(entry: LeaderboardEntry): boolean {
-    return entry.displayName === currentAthleteName.value
+    return entry.name === currentAthleteName.value
 }
 
 function getRankDisplay(index: number): string {
