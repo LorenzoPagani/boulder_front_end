@@ -23,8 +23,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="bibNumber">Numero Pettorale (opzionale)</label>
-                    <input id="bibNumber" v-model="form.bibNumber" type="text" placeholder="es. 101"
+                    <label for="bibNumber">Numero Pettorale*</label>
+                    <input id="bibNumber" v-model="form.bibNumber" type="text" placeholder="es. 101" required
                         :disabled="authStore.loading" />
                 </div>
 
@@ -35,10 +35,9 @@
 
             <div class="login-footer">
                 <p class="help-text">
-                    <strong>Dati demo:</strong><br>
-                    Codice evento: <code>BOULDER2025</code><br>
-                    Nome: <code>Marco Rossi</code> o qualsiasi altro nome<br>
-                    Pettorale: <code>101</code> (opzionale)
+
+                    Made with ❤️ by <code>LOLLOPG</code><br>
+
                 </p>
             </div>
         </div>
@@ -61,14 +60,16 @@ const form = ref({
 })
 
 const isFormValid = computed(() => {
-    return form.value.eventCode.trim() !== '' && form.value.name.trim() !== ''
+    return form.value.eventCode.trim() !== '' &&
+        form.value.name.trim() !== '' &&
+        form.value.bibNumber.trim() !== ''
 })
 
 async function handleLogin() {
     const success = await authStore.login({
         eventCode: form.value.eventCode.trim(),
         name: form.value.name.trim(),
-        bibNumber: form.value.bibNumber.trim() || undefined
+        bibNumber: form.value.bibNumber.trim()
     })
 
     if (success) {

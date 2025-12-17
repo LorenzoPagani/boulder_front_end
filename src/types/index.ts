@@ -12,7 +12,7 @@ export interface ApiResponse<T = any> {
 export interface LoginRequestDto {
     name: string
     eventCode: string
-    bibNumber?: string
+    bibNumber: string
 }
 
 export interface AthleteDto {

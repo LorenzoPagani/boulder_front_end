@@ -43,16 +43,6 @@
                     </button>
                 </div>
 
-                <div class="action-item danger-zone">
-                    <div class="action-info">
-                        <h4>Reset Totale (Dev Only)</h4>
-                        <p>⚠️ Elimina TUTTI i dati dell'evento (blocchi, atleti, completamenti). Usare solo in sviluppo!
-                        </p>
-                    </div>
-                    <button @click="handleResetAll" :disabled="loading" class="action-btn danger">
-                        Reset Totale
-                    </button>
-                </div>
 
                 <div class="action-item">
                     <div class="action-info">
