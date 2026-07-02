@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { authApi } from '@/api/endpoints'
 import { apiClient } from '@/api/client'
 import { mapAthlete } from '@/utils/mappers'
+import { setMockMode } from '@/utils/mockMode'
 import type { Athlete, LoginRequestDto } from '@/types'
 
 export const useAuthStore = defineStore('auth', () => {
@@ -36,6 +37,30 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
+    async function loginDemo() {
+        loading.value = true
+        error.value = null
+        setMockMode(true)
+
+        try {
+            const response = await authApi.login({ eventCode: 'DEMO', name: 'Atleta Demo', bibNumber: 'DEMO' })
+
+            apiClient.setToken(response.token)
+            athlete.value = mapAthlete(response.athlete)
+            isAuthenticated.value = true
+
+            return true
+        } catch (err: any) {
+            setMockMode(false)
+            error.value = err.message || 'Impossibile avviare la modalità demo'
+            isAuthenticated.value = false
+            athlete.value = null
+            return false
+        } finally {
+            loading.value = false
+        }
+    }
+
     async function logout() {
         loading.value = true
         error.value = null
@@ -50,6 +75,7 @@ export const useAuthStore = defineStore('auth', () => {
             athlete.value = null
             isAuthenticated.value = false
             apiClient.clearToken()
+            setMockMode(false)
             loading.value = false
         }
     }
@@ -93,6 +119,7 @@ export const useAuthStore = defineStore('auth', () => {
         loading,
         error,
         login,
+        loginDemo,
         logout,
         loadSession,
         clearError

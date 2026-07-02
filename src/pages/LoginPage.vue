@@ -9,7 +9,15 @@
             <ErrorBanner v-if="authStore.error" :message="authStore.error" type="error" dismissible
                 @dismiss="authStore.clearError()" />
 
-            <form @submit.prevent="handleLogin" class="login-form">
+            <div class="mode-switch">
+                <ToggleSwitch v-model="useDemoMode" />
+                <div class="mode-switch-text">
+                    <label class="mode-switch-label" @click="useDemoMode = !useDemoMode">Modalità Demo</label>
+                    <span>Esplora l'app con dati di esempio, senza bisogno di un evento reale</span>
+                </div>
+            </div>
+
+            <form v-if="!useDemoMode" @submit.prevent="handleLogin" class="login-form">
                 <div class="form-group">
                     <label for="eventCode">Codice Evento*</label>
                     <input id="eventCode" v-model="form.eventCode" type="text" placeholder="es. BOULDER2025" required
@@ -33,6 +41,14 @@
                 </button>
             </form>
 
+            <div v-else class="demo-panel">
+                <p>🎮 Nessuna credenziale richiesta: blocchi, punteggi e classifica sono simulati localmente e non
+                    vengono salvati su alcun server.</p>
+                <button type="button" class="login-btn" :disabled="authStore.loading" @click="handleDemoLogin">
+                    {{ authStore.loading ? 'Avvio demo...' : '🚀 Entra in modalità Demo' }}
+                </button>
+            </div>
+
             <div class="login-footer">
                 <p class="help-text">
 
@@ -49,9 +65,12 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import ErrorBanner from '@/components/ErrorBanner.vue'
+import ToggleSwitch from '@/components/ToggleSwitch.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
+
+const useDemoMode = ref(false)
 
 const form = ref({
     eventCode: '',
@@ -71,6 +90,14 @@ async function handleLogin() {
         name: form.value.name.trim(),
         bibNumber: form.value.bibNumber.trim()
     })
+
+    if (success) {
+        router.push('/blocks')
+    }
+}
+
+async function handleDemoLogin() {
+    const success = await authStore.loginDemo()
 
     if (success) {
         router.push('/blocks')
@@ -125,6 +152,51 @@ async function handleLogin() {
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.95rem;
+}
+
+.mode-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.5rem;
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+}
+
+.mode-switch-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.mode-switch-label {
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.mode-switch-text span {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.demo-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.demo-panel p {
+    margin: 0;
+    padding: 1rem;
+    background: rgba(102, 126, 234, 0.08);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 
 .login-form {
