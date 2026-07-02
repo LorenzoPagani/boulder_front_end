@@ -13,11 +13,10 @@
             <ErrorBanner v-if="blocksStore.error" :message="blocksStore.error" type="error" dismissible
                 @dismiss="blocksStore.clearError()" />
 
-            <div v-if="blocksStore.loading && blocksStore.blocks.length === 0" class="loading-state">
-                <p>Caricamento blocchi...</p>
-            </div>
+            <InlineSpinner v-if="blocksStore.loading && blocksStore.blocks.length === 0" message="Caricamento blocchi..." />
 
             <div v-else-if="blocksStore.blocks.length === 0" class="empty-state">
+                <span class="empty-icon" aria-hidden="true">🧗</span>
                 <p>Nessun blocco disponibile per questo evento.</p>
             </div>
 
@@ -36,6 +35,7 @@ import { useScoreStore } from '@/stores/score'
 import AppNav from '@/components/AppNav.vue'
 import BlockCard from '@/components/BlockCard.vue'
 import ErrorBanner from '@/components/ErrorBanner.vue'
+import InlineSpinner from '@/components/InlineSpinner.vue'
 
 const blocksStore = useBlocksStore()
 const scoreStore = useScoreStore()
@@ -61,7 +61,7 @@ async function refreshBlocks() {
 <style scoped>
 .blocks-page {
     min-height: 100vh;
-    background: #f5f5f5;
+    background: var(--color-bg);
 }
 
 .content {
@@ -79,15 +79,15 @@ async function refreshBlocks() {
 
 .header h2 {
     margin: 0;
-    color: #333;
+    color: var(--color-text);
     font-size: 1.75rem;
 }
 
 .refresh-btn {
     padding: 0.65rem 1.25rem;
-    background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
@@ -95,8 +95,8 @@ async function refreshBlocks() {
 }
 
 .refresh-btn:hover:not(:disabled) {
-    border-color: #2196f3;
-    color: #2196f3;
+    border-color: var(--color-info);
+    color: var(--color-info);
 }
 
 .refresh-btn:disabled {
@@ -110,12 +110,17 @@ async function refreshBlocks() {
     gap: 1.5rem;
 }
 
-.loading-state,
 .empty-state {
     text-align: center;
     padding: 3rem;
-    color: #666;
+    color: var(--color-text-muted);
     font-size: 1.1rem;
+}
+
+.empty-icon {
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
 }
 
 @media (max-width: 768px) {

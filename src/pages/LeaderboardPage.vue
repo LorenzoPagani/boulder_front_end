@@ -13,9 +13,7 @@
             <ErrorBanner v-if="leaderboardStore.error" :message="leaderboardStore.error" type="error" dismissible
                 @dismiss="leaderboardStore.clearError()" />
 
-            <div v-if="leaderboardStore.loading && !leaderboardStore.leaderboard" class="loading-state">
-                <p>Caricamento classifica...</p>
-            </div>
+            <InlineSpinner v-if="leaderboardStore.loading && !leaderboardStore.leaderboard" message="Caricamento classifica..." />
 
             <div v-else-if="leaderboardStore.leaderboard" class="leaderboard-container">
                 <!-- Athlete Rank Info -->
@@ -42,7 +40,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(entry, index) in leaderboardStore.leaderboard.entries" :key="index" :class="{
+                            <tr v-for="(entry, index) in leaderboardStore.leaderboard.entries" :key="entry.id" :class="{
                                 'current-athlete': isCurrentAthlete(entry),
                                 'top-3': index < 3
                             }">
@@ -73,12 +71,13 @@ import { useAuthStore } from '@/stores/auth'
 import { formatScore } from '@/utils/format'
 import AppNav from '@/components/AppNav.vue'
 import ErrorBanner from '@/components/ErrorBanner.vue'
+import InlineSpinner from '@/components/InlineSpinner.vue'
 import type { LeaderboardEntry } from '@/types'
 
 const leaderboardStore = useLeaderboardStore()
 const authStore = useAuthStore()
 
-const currentAthleteName = computed(() => authStore.athlete?.name)
+const currentAthleteId = computed(() => authStore.athlete?.id)
 
 onMounted(async () => {
     await leaderboardStore.fetchLeaderboard()
@@ -89,7 +88,7 @@ async function refreshLeaderboard() {
 }
 
 function isCurrentAthlete(entry: LeaderboardEntry): boolean {
-    return entry.name === currentAthleteName.value
+    return entry.id === currentAthleteId.value
 }
 
 function getRankDisplay(index: number): string {
@@ -111,7 +110,7 @@ function getRankClass(index: number): string {
 <style scoped>
 .leaderboard-page {
     min-height: 100vh;
-    background: #f5f5f5;
+    background: var(--color-bg);
 }
 
 .content {
@@ -129,15 +128,15 @@ function getRankClass(index: number): string {
 
 .header h2 {
     margin: 0;
-    color: #333;
+    color: var(--color-text);
     font-size: 1.75rem;
 }
 
 .refresh-btn {
     padding: 0.65rem 1.25rem;
-    background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
@@ -145,20 +144,13 @@ function getRankClass(index: number): string {
 }
 
 .refresh-btn:hover:not(:disabled) {
-    border-color: #2196f3;
-    color: #2196f3;
+    border-color: var(--color-info);
+    color: var(--color-info);
 }
 
 .refresh-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-}
-
-.loading-state {
-    text-align: center;
-    padding: 3rem;
-    color: #666;
-    font-size: 1.1rem;
 }
 
 .leaderboard-container {
@@ -174,29 +166,29 @@ function getRankClass(index: number): string {
 }
 
 .rank-card {
-    background: white;
+    background: var(--color-surface);
     padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     text-align: center;
 }
 
 .rank-label {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--color-text-muted);
     margin-bottom: 0.5rem;
 }
 
 .rank-value {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #667eea;
+    color: var(--color-primary);
 }
 
 .leaderboard-table-container {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
 }
 
@@ -206,7 +198,7 @@ function getRankClass(index: number): string {
 }
 
 .leaderboard-table th {
-    background: #2c3e50;
+    background: var(--color-navy);
     color: white;
     padding: 1rem;
     text-align: left;
@@ -216,6 +208,10 @@ function getRankClass(index: number): string {
 .leaderboard-table td {
     padding: 1rem;
     border-bottom: 1px solid #f0f0f0;
+}
+
+.leaderboard-table tbody tr {
+    transition: background 0.15s;
 }
 
 .leaderboard-table tr:last-child td {
@@ -266,14 +262,14 @@ function getRankClass(index: number): string {
 
 .athlete-name {
     font-weight: 500;
-    color: #333;
+    color: var(--color-text);
 }
 
 .you-badge {
     display: inline-block;
     margin-left: 0.5rem;
     padding: 0.2rem 0.6rem;
-    background: #667eea;
+    background: var(--color-primary);
     color: white;
     border-radius: 12px;
     font-size: 0.75rem;
@@ -282,7 +278,7 @@ function getRankClass(index: number): string {
 
 .score {
     font-weight: 600;
-    color: #2196f3;
+    color: var(--color-info);
     font-size: 1.1rem;
 }
 

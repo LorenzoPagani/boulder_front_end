@@ -42,6 +42,10 @@ const router = createRouter({
             name: 'settings',
             component: SettingsPage,
             meta: { requiresAuth: true }
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            redirect: '/'
         }
     ]
 })
@@ -61,6 +65,13 @@ router.beforeEach(async (to, _from, next) => {
             next('/login')
             return
         }
+    }
+
+    // If visiting login while a valid session still exists (e.g. a stored
+    // token from a previous visit, not yet loaded into the in-memory store),
+    // try to restore it before deciding whether to bounce to /blocks.
+    if (to.path === '/login' && !authStore.isAuthenticated) {
+        await authStore.loadSession()
     }
 
     // If user is authenticated and tries to access login, redirect to blocks

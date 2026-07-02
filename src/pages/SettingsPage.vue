@@ -131,7 +131,7 @@ async function handleLogout() {
 <style scoped>
 .settings-page {
     min-height: 100vh;
-    background: #f5f5f5;
+    background: var(--color-bg);
 }
 
 .content {
@@ -142,21 +142,21 @@ async function handleLogout() {
 
 .content h2 {
     margin: 0 0 2rem 0;
-    color: #333;
+    color: var(--color-text);
     font-size: 1.75rem;
 }
 
 .settings-section {
-    background: white;
+    background: var(--color-surface);
     padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     margin-bottom: 2rem;
 }
 
 .settings-section h3 {
     margin: 0 0 1.5rem 0;
-    color: #333;
+    color: var(--color-text);
     font-size: 1.25rem;
     padding-bottom: 0.75rem;
     border-bottom: 2px solid #f0f0f0;
@@ -172,16 +172,16 @@ async function handleLogout() {
     justify-content: space-between;
     padding: 0.75rem;
     background: #f9f9f9;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
 }
 
 .info-label {
     font-weight: 600;
-    color: #666;
+    color: var(--color-text-muted);
 }
 
 .info-value {
-    color: #333;
+    color: var(--color-text);
 }
 
 .action-item {
@@ -189,15 +189,15 @@ async function handleLogout() {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
     margin-bottom: 1rem;
     gap: 1rem;
+    transition: border-color 0.2s;
 }
 
-.action-item.danger-zone {
-    border-color: #f44336;
-    background: #fff5f5;
+.action-item:hover {
+    border-color: #d0d0d0;
 }
 
 .action-info {
@@ -206,22 +206,22 @@ async function handleLogout() {
 
 .action-info h4 {
     margin: 0 0 0.5rem 0;
-    color: #333;
+    color: var(--color-text);
     font-size: 1.1rem;
 }
 
 .action-info p {
     margin: 0;
-    color: #666;
+    color: var(--color-text-muted);
     font-size: 0.9rem;
 }
 
 .action-btn {
     padding: 0.75rem 1.5rem;
-    border: 2px solid #2196f3;
-    background: #2196f3;
+    border: 2px solid var(--color-info);
+    background: var(--color-info);
     color: white;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
@@ -230,28 +230,18 @@ async function handleLogout() {
 }
 
 .action-btn:hover:not(:disabled) {
-    background: #1976d2;
-    border-color: #1976d2;
+    background: var(--color-info-dark);
+    border-color: var(--color-info-dark);
 }
 
 .action-btn.warning {
-    border-color: #ff9800;
-    background: #ff9800;
+    border-color: var(--color-warning);
+    background: var(--color-warning);
 }
 
 .action-btn.warning:hover:not(:disabled) {
-    background: #f57c00;
-    border-color: #f57c00;
-}
-
-.action-btn.danger {
-    border-color: #f44336;
-    background: #f44336;
-}
-
-.action-btn.danger:hover:not(:disabled) {
-    background: #d32f2f;
-    border-color: #d32f2f;
+    background: var(--color-warning-dark);
+    border-color: var(--color-warning-dark);
 }
 
 .action-btn:disabled {

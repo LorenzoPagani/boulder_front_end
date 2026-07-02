@@ -49,20 +49,21 @@ const difficultyConfig = computed(() => DIFFICULTY_CONFIG[props.block.difficulty
 
 <style scoped>
 .block-card {
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
     padding: 1.25rem;
-    background: white;
-    transition: all 0.3s ease;
+    background: var(--color-surface);
+    transition: all 0.2s ease;
 }
 
 .block-card.completed {
-    border-color: #4caf50;
+    border-color: var(--color-success);
     background: #f1f8f4;
 }
 
 .block-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .block-header {
@@ -75,7 +76,7 @@ const difficultyConfig = computed(() => DIFFICULTY_CONFIG[props.block.difficulty
 .block-number {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
+    color: var(--color-text);
 }
 
 .difficulty-badge {
@@ -101,31 +102,31 @@ const difficultyConfig = computed(() => DIFFICULTY_CONFIG[props.block.difficulty
 
 .stat-label {
     font-size: 0.85rem;
-    color: #666;
+    color: var(--color-text-muted);
 }
 
 .stat-value {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #333;
+    color: var(--color-text);
 }
 
 .completed-info {
     font-size: 0.85rem;
-    color: #4caf50;
+    color: var(--color-success);
     margin-bottom: 0.75rem;
     padding: 0.5rem;
     background: rgba(76, 175, 80, 0.1);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
 }
 
 .toggle-btn {
     width: 100%;
     padding: 0.75rem;
-    border: 2px solid #2196f3;
-    background: #2196f3;
+    border: 2px solid var(--color-info);
+    background: var(--color-info);
     color: white;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -133,18 +134,18 @@ const difficultyConfig = computed(() => DIFFICULTY_CONFIG[props.block.difficulty
 }
 
 .toggle-btn:hover:not(:disabled) {
-    background: #1976d2;
-    border-color: #1976d2;
+    background: var(--color-info-dark);
+    border-color: var(--color-info-dark);
 }
 
 .toggle-btn.completed {
     background: white;
-    color: #f44336;
-    border-color: #f44336;
+    color: var(--color-danger);
+    border-color: var(--color-danger);
 }
 
 .toggle-btn.completed:hover:not(:disabled) {
-    background: #f44336;
+    background: var(--color-danger);
     color: white;
 }
 
