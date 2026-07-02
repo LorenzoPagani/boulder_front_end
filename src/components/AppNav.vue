@@ -2,7 +2,10 @@
     <nav class="app-nav">
         <div class="nav-container">
             <div class="nav-brand">
-                <h1>🧗 Boulder Score</h1>
+                <h1>
+                    🧗 Boulder Score
+                    <span v-if="mockModeEnabled" class="demo-badge">Demo</span>
+                </h1>
                 <p v-if="athlete" class="athlete-info">
                     {{ athlete.name }}
                     <span v-if="athlete.bibNumber">(#{{ athlete.bibNumber }})</span>
@@ -30,6 +33,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { mockModeEnabled } from '@/utils/mockMode'
 
 const authStore = useAuthStore()
 const athlete = computed(() => authStore.athlete)
@@ -60,6 +64,22 @@ const athlete = computed(() => authStore.athlete)
 .nav-brand h1 {
     margin: 0;
     font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.demo-badge {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    background: var(--color-warning);
+    color: #4a2e00;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    vertical-align: middle;
 }
 
 .athlete-info {

@@ -10,6 +10,10 @@
             <ErrorBanner v-if="successMessage" :message="successMessage" type="info" dismissible
                 @dismiss="successMessage = null" />
 
+            <ErrorBanner v-if="isDemo"
+                message="🎮 Modalità Demo attiva: stai esplorando l'app con dati di esempio, nulla viene salvato su un server reale."
+                type="info" />
+
             <!-- Athlete Info -->
             <section class="settings-section">
                 <h3>Informazioni Atleta</h3>
@@ -46,11 +50,11 @@
 
                 <div class="action-item">
                     <div class="action-info">
-                        <h4>Logout</h4>
-                        <p>Esci dall'applicazione.</p>
+                        <h4>{{ isDemo ? 'Esci dalla Demo' : 'Logout' }}</h4>
+                        <p>{{ isDemo ? 'Torna alla modalità normale e chiudi la sessione demo.' : "Esci dall'applicazione." }}</p>
                     </div>
                     <button @click="handleLogout" :disabled="loading" class="action-btn">
-                        Logout
+                        {{ isDemo ? 'Esci dalla Demo' : 'Logout' }}
                     </button>
                 </div>
             </section>
@@ -67,6 +71,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useBlocksStore } from '@/stores/blocks'
 import { useScoreStore } from '@/stores/score'
 import { useLeaderboardStore } from '@/stores/leaderboard'
+import { mockModeEnabled } from '@/utils/mockMode'
 import AppNav from '@/components/AppNav.vue'
 import ErrorBanner from '@/components/ErrorBanner.vue'
 import LoadingOverlay from '@/components/LoadingOverlay.vue'
@@ -76,6 +81,7 @@ const authStore = useAuthStore()
 const blocksStore = useBlocksStore()
 const scoreStore = useScoreStore()
 const leaderboardStore = useLeaderboardStore()
+const isDemo = mockModeEnabled
 
 const loading = ref(false)
 const error = ref<string | null>(null)
