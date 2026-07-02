@@ -13,19 +13,19 @@
                 <div class="form-group">
                     <label for="eventCode">Codice Evento*</label>
                     <input id="eventCode" v-model="form.eventCode" type="text" placeholder="es. BOULDER2025" required
-                        :disabled="authStore.loading" />
+                        autocomplete="off" autofocus :disabled="authStore.loading" />
                 </div>
 
                 <div class="form-group">
                     <label for="name">Nome*</label>
                     <input id="name" v-model="form.name" type="text" placeholder="es. Marco Rossi" required
-                        :disabled="authStore.loading" />
+                        autocomplete="name" :disabled="authStore.loading" />
                 </div>
 
                 <div class="form-group">
                     <label for="bibNumber">Numero Pettorale*</label>
-                    <input id="bibNumber" v-model="form.bibNumber" type="text" placeholder="es. 101" required
-                        :disabled="authStore.loading" />
+                    <input id="bibNumber" v-model="form.bibNumber" type="text" inputmode="numeric"
+                        placeholder="es. 101" required autocomplete="off" :disabled="authStore.loading" />
                 </div>
 
                 <button type="submit" class="login-btn" :disabled="authStore.loading || !isFormValid">
@@ -84,17 +84,30 @@ async function handleLogin() {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-primary);
     padding: 1rem;
 }
 
 .login-container {
-    background: white;
-    border-radius: 16px;
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
     padding: 2rem;
     max-width: 450px;
     width: 100%;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-lg);
+    animation: pop-in 0.25s ease;
+}
+
+@keyframes pop-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .login-header {
@@ -105,12 +118,12 @@ async function handleLogin() {
 .login-header h1 {
     margin: 0 0 0.5rem 0;
     font-size: 2rem;
-    color: #333;
+    color: var(--color-text);
 }
 
 .login-header p {
     margin: 0;
-    color: #666;
+    color: var(--color-text-muted);
     font-size: 0.95rem;
 }
 
@@ -128,43 +141,50 @@ async function handleLogin() {
 
 .form-group label {
     font-weight: 600;
-    color: #333;
+    color: var(--color-text);
     font-size: 0.95rem;
 }
 
 .form-group input {
     padding: 0.85rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
     font-size: 1rem;
     transition: border-color 0.2s;
 }
 
 .form-group input:focus {
+    border-color: var(--color-primary);
+}
+
+.form-group input:focus:not(:focus-visible) {
     outline: none;
-    border-color: #667eea;
 }
 
 .form-group input:disabled {
-    background: #f5f5f5;
+    background: var(--color-bg);
     cursor: not-allowed;
 }
 
 .login-btn {
     padding: 1rem;
-    background: #667eea;
+    background: var(--color-primary);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.1s;
     margin-top: 0.5rem;
 }
 
 .login-btn:hover:not(:disabled) {
-    background: #5568d3;
+    background: var(--color-primary-dark);
+}
+
+.login-btn:active:not(:disabled) {
+    transform: scale(0.98);
 }
 
 .login-btn:disabled {
@@ -175,21 +195,21 @@ async function handleLogin() {
 .login-footer {
     margin-top: 2rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--color-border);
 }
 
 .help-text {
     font-size: 0.85rem;
-    color: #666;
+    color: var(--color-text-muted);
     line-height: 1.6;
     margin: 0;
 }
 
 .help-text code {
-    background: #f5f5f5;
+    background: var(--color-bg);
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
     font-family: monospace;
-    color: #667eea;
+    color: var(--color-primary);
 }
 </style>

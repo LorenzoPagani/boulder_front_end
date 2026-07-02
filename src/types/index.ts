@@ -129,7 +129,9 @@ export interface ScoreDetails {
 }
 
 export interface LeaderboardEntry {
+    id: number
     name: string
+    bibNumber: string | null
     totalScore: number
     completedBlocks: number
 }

@@ -38,9 +38,9 @@ export function mapBlock(dto: BlockDto): Block {
     }
 }
 
-// Map BlockDto array to Block array
+// Map BlockDto array to Block array (ordered by block number for a stable grid)
 export function mapBlocks(dtos: BlockDto[]): Block[] {
-    return dtos.map(mapBlock)
+    return dtos.map(mapBlock).sort((a, b) => a.blockNumber - b.blockNumber)
 }
 
 // Map BlockScoreDetailDto to BlockScoreDetail
@@ -79,7 +79,9 @@ export function mapScoreDetails(dto: ScoreDetailsResponseDto, scoreSummary?: { s
 // Map LeaderboardEntryDto to LeaderboardEntry
 export function mapLeaderboardEntry(dto: LeaderboardEntryDto): LeaderboardEntry {
     return {
+        id: dto.id,
         name: dto.name,
+        bibNumber: dto.bib_number,
         totalScore: dto.score, // backend usa 'score' non 'total_score'
         completedBlocks: dto.completed_blocks
     }

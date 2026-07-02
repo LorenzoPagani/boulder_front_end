@@ -1,5 +1,5 @@
 <template>
-    <div v-if="visible" class="loading-overlay" role="status" aria-live="polite">
+    <div class="inline-spinner" role="status" aria-live="polite">
         <div class="spinner" aria-hidden="true"></div>
         <p v-if="message">{{ message }}</p>
     </div>
@@ -7,34 +7,29 @@
 
 <script setup lang="ts">
 defineProps<{
-    visible: boolean
     message?: string
 }>()
 </script>
 
 <style scoped>
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+.inline-spinner {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
-    color: white;
+    gap: 1rem;
+    padding: 3rem 1rem;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
 }
 
 .spinner {
-    border: 4px solid rgba(255, 255, 255, 0.3);
+    border: 4px solid rgba(102, 126, 234, 0.15);
     border-radius: 50%;
-    border-top: 4px solid white;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
+    border-top: 4px solid var(--color-primary);
+    width: 40px;
+    height: 40px;
+    animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
@@ -45,10 +40,5 @@ defineProps<{
     100% {
         transform: rotate(360deg);
     }
-}
-
-p {
-    margin-top: 1rem;
-    font-size: 1rem;
 }
 </style>

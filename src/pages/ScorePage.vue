@@ -35,9 +35,7 @@
             <div class="details-section">
                 <h3>Dettaglio Punteggi per Blocco</h3>
 
-                <div v-if="scoreStore.loading && !scoreStore.details" class="loading-state">
-                    <p>Caricamento dettagli...</p>
-                </div>
+                <InlineSpinner v-if="scoreStore.loading && !scoreStore.details" message="Caricamento dettagli..." />
 
                 <div v-else-if="scoreStore.details" class="details-table-container">
                     <table class="details-table">
@@ -81,6 +79,7 @@ import { DIFFICULTY_CONFIG } from '@/types'
 import { formatScore } from '@/utils/format'
 import AppNav from '@/components/AppNav.vue'
 import ErrorBanner from '@/components/ErrorBanner.vue'
+import InlineSpinner from '@/components/InlineSpinner.vue'
 
 const scoreStore = useScoreStore()
 
@@ -110,7 +109,7 @@ function getDifficultyColor(difficulty: string): string {
 <style scoped>
 .score-page {
     min-height: 100vh;
-    background: #f5f5f5;
+    background: var(--color-bg);
 }
 
 .content {
@@ -128,15 +127,15 @@ function getDifficultyColor(difficulty: string): string {
 
 .header h2 {
     margin: 0;
-    color: #333;
+    color: var(--color-text);
     font-size: 1.75rem;
 }
 
 .refresh-btn {
     padding: 0.65rem 1.25rem;
-    background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
@@ -144,8 +143,8 @@ function getDifficultyColor(difficulty: string): string {
 }
 
 .refresh-btn:hover:not(:disabled) {
-    border-color: #2196f3;
-    color: #2196f3;
+    border-color: var(--color-info);
+    color: var(--color-info);
 }
 
 .refresh-btn:disabled {
@@ -161,15 +160,21 @@ function getDifficultyColor(difficulty: string): string {
 }
 
 .summary-card {
-    background: white;
+    background: var(--color-surface);
     padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     text-align: center;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.summary-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .summary-card.highlight {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-primary);
     color: white;
 }
 
@@ -189,15 +194,15 @@ function getDifficultyColor(difficulty: string): string {
 }
 
 .details-section {
-    background: white;
+    background: var(--color-surface);
     padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
 }
 
 .details-section h3 {
     margin: 0 0 1.5rem 0;
-    color: #333;
+    color: var(--color-text);
 }
 
 .details-table-container {
@@ -210,12 +215,12 @@ function getDifficultyColor(difficulty: string): string {
 }
 
 .details-table th {
-    background: #f5f5f5;
+    background: var(--color-bg);
     padding: 0.75rem;
     text-align: left;
     font-weight: 600;
-    color: #333;
-    border-bottom: 2px solid #e0e0e0;
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-border);
 }
 
 .details-table td {
@@ -223,18 +228,30 @@ function getDifficultyColor(difficulty: string): string {
     border-bottom: 1px solid #f0f0f0;
 }
 
+.details-table tbody tr {
+    transition: background 0.15s;
+}
+
+.details-table tbody tr:hover {
+    background: #fafafa;
+}
+
 .details-table tr.completed {
     background: #f1f8f4;
 }
 
+.details-table tr.completed:hover {
+    background: #e9f5ed;
+}
+
 .block-number {
     font-weight: 600;
-    color: #333;
+    color: var(--color-text);
 }
 
 .current-score {
     font-weight: 600;
-    color: #2196f3;
+    color: var(--color-info);
 }
 
 .difficulty-badge {
@@ -244,12 +261,6 @@ function getDifficultyColor(difficulty: string): string {
     font-size: 0.85rem;
     font-weight: 600;
     color: #333;
-}
-
-.loading-state {
-    text-align: center;
-    padding: 2rem;
-    color: #666;
 }
 
 @media (max-width: 768px) {

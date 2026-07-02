@@ -37,10 +37,13 @@ const athlete = computed(() => authStore.athlete)
 
 <style scoped>
 .app-nav {
-    background: #2c3e50;
+    background: var(--color-navy);
     color: white;
     padding: 1rem 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .nav-container {
@@ -78,7 +81,7 @@ const athlete = computed(() => authStore.athlete)
     text-decoration: none;
     font-weight: 500;
     padding: 0.5rem 1rem;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     transition: background 0.2s;
 }
 
@@ -88,6 +91,7 @@ const athlete = computed(() => authStore.athlete)
 
 .nav-link.router-link-active {
     background: rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 -2px 0 var(--color-primary);
 }
 
 @media (max-width: 768px) {
